@@ -18,7 +18,7 @@ router.post("/register", register)
 router.post("/login", login)
 
 // This route handles GET for getting user information
-router.get("/user", verifyToken, getUserInfo)
+router.get("/admin", verifyToken, getUserInfo)
 
 
 module.exports = router;
