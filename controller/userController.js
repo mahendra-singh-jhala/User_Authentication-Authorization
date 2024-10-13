@@ -13,6 +13,16 @@ exports.register = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
+        
+        // Check if the user already exists
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+        
+        if (existingUser) {
+            return res.status(409).json({
+                error: "User already exists"
+            });
+        }
+
         const hashPassword = await bcrypt.hash(password, 10);
         const newUser = new User({username, email, password: hashPassword});
         await newUser.save();
